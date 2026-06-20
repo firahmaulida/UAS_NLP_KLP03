@@ -1,0 +1,8 @@
+streamlit>=1.38
+pandas>=2.0
+
+# Opsional, hanya diperlukan jika ingin memakai fitur
+# "Hubungkan model Hugging Face" di halaman Keyphrase Generator:
+# transformers>=4.40
+# torch>=2.2
+# sentencepiece
