@@ -1,5 +1,4 @@
 # Model & dataset besar
-model_t5_keyphrase/
 data_preprocessed/
 *.safetensors
 *.bin

@@ -1,0 +1,17 @@
+{
+  "model_name": "t5-small",
+  "learning_rate": 5e-05,
+  "train_batch": 8,
+  "max_epochs": 10,
+  "max_input_len": 512,
+  "max_target_len": 64,
+  "es_patience": 3,
+  "num_beams": 4,
+  "seed": 42,
+  "train_samples": 6340,
+  "val_samples": 793,
+  "test_samples": 793,
+  "total_steps": 7930,
+  "training_loss": 1.6030383962700978,
+  "training_time_minutes": 42.47
+}
