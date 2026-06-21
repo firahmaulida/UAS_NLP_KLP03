@@ -1016,7 +1016,11 @@ elif page == "Keyphrase Generator":
 
             pool = df_full
             if search_title:
-                pool = pool[pool["judul"].str.contains(search_title, case=False, na=False)]
+                try:
+                    pool = pool[pool["judul"].str.contains(search_title, case=False, na=False, regex=True)]
+                except re.error:
+                    # Jika ada error regex, fallback ke literal search
+                    pool = pool[pool["judul"].str.contains(search_title, case=False, na=False, regex=False)]
 
             if len(pool) == 0:
                 st.info("Tidak ada artikel yang cocok dengan pencarian.")
