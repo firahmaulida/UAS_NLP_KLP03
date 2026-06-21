@@ -1,0 +1,31 @@
+# Model & dataset besar
+model_t5_keyphrase/
+data_preprocessed/
+*.safetensors
+*.bin
+*.csv
+*.pth
+*.pt
+
+# Cache
+__huggingface_repos__/
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Environment
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
