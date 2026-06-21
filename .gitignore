@@ -21,10 +21,6 @@ venv/
 env/
 .env
 
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb
-
 # OS
 .DS_Store
 Thumbs.db
