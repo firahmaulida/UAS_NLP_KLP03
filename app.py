@@ -42,34 +42,57 @@ CUSTOM_CSS = """
 :root {
     --paper: #F8F9FA;
     --paper-raised: #FFFFFF;
-    --ink: #0F172A;
-    --ink-soft: #475569;
-    --ink-lighter: #64748B;
+    --ink: #1E293B; /* Sedikit lebih pekat */
+    --ink-soft: #64748B;
     --rule: #E2E8F0;
     --indigo: #4F46E5;
-    --indigo-soft: #6366F1;
-    --indigo-lighter: #EEF2FF;
-    --terracotta: #DC2626;
+    --indigo-soft: #818CF8;
+    --terracotta: #EA580C;
     --moss: #059669;
-    --moss-light: #D1FAE5;
     --tag-bg: #F1F5F9;
-    --border-focus: #3B82F6;
-    --success: #10B981;
 }
+
+/* ---------- 1. Animasi Masuk (Fade & Slide) ---------- */
+@keyframes fadeSlideUp {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.block-container {
+    animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+/* ---------- 2. Custom Text Selection ---------- */
+::selection {
+    background-color: var(--indigo-soft);
+    color: #FFFFFF;
+}
+
+/* ---------- 3. Clean Slate (Hapus Branding) ---------- */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
 
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
     color: var(--ink) !important;
+    -webkit-font-smoothing: antialiased; /* Teks lebih tajam di Mac/Windows */
 }
 
 .stApp {
     background-color: var(--paper);
 }
 
-/* Memastikan kontras teks optimal di semua elemen */
-p, span, div, li, label { 
-    color: var(--ink) !important;
-}
+/* ---------- 4. Custom Scrollbar Elegan ---------- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; border: 2px solid var(--paper); }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* ---------- 5. Tipografi Dasar ---------- */
+.stMarkdown p, .stMarkdown li { color: var(--ink); line-height: 1.65; }
 
 h1, h2, h3 {
     font-family: 'Source Serif 4', serif !important;
@@ -78,375 +101,157 @@ h1, h2, h3 {
 }
 
 h1 { font-weight: 700 !important; font-size: 2.2rem !important; }
-h2 { font-weight: 700 !important; border-bottom: 2px solid var(--indigo); padding-bottom: 0.6rem; margin-top: 1.8rem !important; color: var(--ink) !important;}
-h3 { font-weight: 700 !important; margin-top: 1.2rem !important; color: var(--ink) !important;}
+h2 { font-weight: 600 !important; border-bottom: 1px solid var(--rule); padding-bottom: 0.5rem; margin-top: 1.8rem !important;}
+h3 { font-weight: 600 !important; margin-top: 1.4rem !important;}
 
 code, .mono {
     font-family: 'IBM Plex Mono', monospace !important;
-    background: var(--indigo-lighter);
-    padding: 0.2rem 0.4rem;
-    border-radius: 5px;
-    color: var(--indigo);
+    background: var(--tag-bg);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    color: var(--terracotta);
     font-size: 0.85em;
-    font-weight: 600;
+    border: 1px solid #E2E8F0;
 }
 
-/* ---------- Masthead ---------- */
-.masthead {
-    background: linear-gradient(135deg, var(--paper-raised) 0%, #F0F9FF 100%);
-    border: 2px solid var(--indigo);
-    border-radius: 12px;
-    padding: 2.5rem 2.5rem;
-    margin-bottom: 2.5rem;
-    box-shadow: 0 8px 16px rgba(79, 70, 229, 0.1);
-}
-.masthead .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--indigo);
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-}
-.masthead h1 { 
-    margin: 0 0 1rem 0; 
-    border: none; 
-    font-size: 2.8rem !important;
+/* ---------- 6. Elemen Interaktif & Focus States ---------- */
+label p { color: var(--ink) !important; font-weight: 500; }
+
+/* Input, Selectbox, Text Area */
+div[data-baseweb="select"] > div,
+.stTextInput input, .stTextArea textarea, .stNumberInput input {
+    background-color: var(--paper-raised) !important;
     color: var(--ink) !important;
-}
-.masthead .deck {
-    font-size: 1.1rem;
-    color: var(--ink-soft);
-    line-height: 1.8;
-    max-width: 75ch;
-    font-weight: 500;
+    border: 1px solid var(--rule) !important;
+    border-radius: 6px !important;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
-/* ---------- Cards ---------- */
-.card {
-    background: var(--paper-raised);
-    border: 1px solid var(--rule);
-    border-radius: 10px;
-    padding: 1.5rem;
-    height: 100%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    transition: box-shadow 0.3s ease;
-}
-.card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.card-tight { padding: 1.2rem 1.5rem; }
-
-.stat-card {
-    background: var(--paper-raised);
-    border: 1.5px solid var(--rule);
-    border-left: 5px solid var(--indigo);
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-}
-.stat-card:hover {
-    border-color: var(--indigo-soft);
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
-}
-.stat-card .stat-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-lighter);
-    font-weight: 700;
-}
-.stat-card .stat-value {
-    font-family: 'Source Serif 4', serif;
-    font-size: 2.6rem;
-    font-weight: 800;
-    color: var(--indigo);
-    line-height: 1.1;
-    margin: 0.5rem 0;
-}
-.stat-card .stat-sub {
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-    font-weight: 500;
+/* Efek Glow saat mengetik */
+div[data-baseweb="select"] > div:focus-within,
+.stTextInput input:focus, .stTextArea textarea:focus, .stNumberInput input:focus {
+    outline: none !important;
+    border-color: var(--indigo) !important;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important;
 }
 
-/* ---------- Pipeline ---------- */
-.pipeline {
-    display: flex;
-    align-items: stretch;
-    gap: 1rem;
-    margin: 2rem 0 2.5rem 0;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
+div[data-baseweb="select"] span { color: var(--ink) !important; }
+ul[data-baseweb="menu"] { background-color: var(--paper-raised) !important; border: 1px solid var(--rule) !important; border-radius: 8px; overflow: hidden; }
+ul[data-baseweb="menu"] li { color: var(--ink) !important; transition: background 0.2s; }
+ul[data-baseweb="menu"] li:hover { background-color: var(--tag-bg) !important; }
+
+/* ---------- 7. Tombol dengan Micro-Interactions ---------- */
+.stButton button {
+    background-color: var(--paper-raised) !important;
+    color: var(--ink) !important;
+    border: 1px solid #CBD5E1 !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
-.pipe-step {
-    flex: 1;
-    min-width: 200px;
-    background: linear-gradient(135deg, var(--paper-raised) 0%, #F0F9FF 50%);
-    border: 1.5px solid var(--indigo-lighter);
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    transition: all 0.3s ease;
+.stButton button * { color: inherit !important; }
+.stButton button:hover {
+    border-color: var(--indigo) !important;
+    color: var(--indigo) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.1);
 }
-.pipe-step:hover {
-    border-color: var(--indigo);
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+.stButton button:active { transform: scale(0.97); } /* Efek ciut saat diklik */
+
+/* Tombol Utama (Primary) - Gradien Mewah */
+.stButton button[kind="primary"] {
+    background: linear-gradient(135deg, var(--indigo) 0%, #4338ca 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+}
+.stButton button[kind="primary"]:hover {
+    box-shadow: 0 6px 12px -2px rgba(79, 70, 229, 0.3);
     transform: translateY(-2px);
 }
-.pipe-step .pipe-index {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--indigo);
-    letter-spacing: 0.1em;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-.pipe-step .pipe-title {
-    font-family: 'Source Serif 4', serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin: 0.7rem 0;
-    color: var(--ink);
-}
-.pipe-step .pipe-desc {
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-    line-height: 1.6;
-}
-.pipe-arrow {
-    display: flex; align-items: center; justify-content: center;
-    width: 28px; color: var(--indigo); font-size: 1.8rem; flex-shrink: 0; font-weight: bold;
-}
+.stButton button[kind="primary"]:active { transform: scale(0.97); }
 
-/* ---------- Tags ---------- */
-.tag {
-    display: inline-block;
-    background: var(--indigo-lighter);
-    color: var(--indigo);
-    border: 1.5px solid var(--indigo-soft);
-    border-radius: 999px;
-    padding: 0.3rem 0.85rem;
-    font-size: 0.8rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 600;
-    margin: 0.2rem 0.3rem 0.2rem 0;
+/* ---------- 8. Sidebar & Navigasi ---------- */
+section[data-testid="stSidebar"] { 
+    background-color: #F8FAFC !important; 
+    border-right: 1px solid var(--rule); 
+}
+/* Efek Hover pada Navigasi Sidebar */
+div[role="radiogroup"] label {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    margin-bottom: 0.2rem;
     transition: all 0.2s ease;
 }
-.tag:hover {
-    background: var(--indigo-soft);
-    color: white;
+div[role="radiogroup"] label:hover {
+    background-color: rgba(79, 70, 229, 0.05);
+    transform: translateX(3px); /* Sedikit bergeser ke kanan saat dihover */
 }
-.tag-indigo { 
-    background: var(--indigo-lighter); 
-    border-color: var(--indigo-soft);
-    color: var(--indigo);
+div[role="radiogroup"] label div, div[data-testid="stCheckbox"] label div { color: var(--ink) !important; }
+div[data-testid="stThumbValue"] { color: var(--ink) !important; font-family: 'IBM Plex Mono', monospace !important; }
+
+/* ---------- 9. Multiselect Tags (Teks Putih Bersih) ---------- */
+span[data-baseweb="tag"] { background-color: var(--indigo) !important; border: none !important; border-radius: 4px !important; }
+span[data-baseweb="tag"] span { color: #FFFFFF !important; font-weight: 500 !important; }
+span[data-baseweb="tag"] svg { fill: #FFFFFF !important; }
+
+/* ---------- 10. Cards & Masthead (Soft Shadow & Hover) ---------- */
+.masthead {
+    background: linear-gradient(145deg, var(--paper-raised), #F8FAFC);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.02), 0 8px 10px -6px rgba(0,0,0,0.01);
 }
-.tag-terra { 
-    background: #FEE2E2; 
-    border-color: #FECACA; 
-    color: #DC2626;
+.masthead .eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--indigo); font-weight: 600; margin-bottom: 0.75rem;
 }
-.tag-moss { 
-    background: var(--moss-light); 
-    border-color: #A7F3D0; 
-    color: var(--moss);
+.masthead h1 { margin: 0 0 0.5rem 0; border: none; font-size: 2.5rem !important; }
+.masthead .deck { font-size: 1.05rem; color: var(--ink-soft); line-height: 1.6; max-width: 75ch; }
+
+.card, .stat-card, .sample-block, .pipe-step {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---------- Sample Blocks ---------- */
-.sample-block {
-    border: 1.5px solid var(--rule);
-    background: var(--paper-raised);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.sample-block .sample-head {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 0.9rem 1.2rem;
-    border-bottom: 1.5px solid var(--rule);
-    color: white;
-}
-.sample-head.input { 
-    background: linear-gradient(90deg, var(--indigo) 0%, var(--indigo-soft) 100%);
-    color: white;
-}
-.sample-head.target { 
-    background: linear-gradient(90deg, #DC2626 0%, #F87171 100%);
-    color: white;
-}
-.sample-body {
-    padding: 1.2rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: var(--ink);
-    white-space: pre-wrap;
-    word-break: break-word;
-    background: var(--paper);
+/* Efek melayang elegan saat di-hover */
+.card:hover, .stat-card:hover, .sample-block:hover, .pipe-step:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08), 0 4px 6px -3px rgba(0, 0, 0, 0.04);
 }
 
-/* ---------- Tables Markdown Format ---------- */
-table { 
-    border-collapse: collapse; 
-    width: 100%; 
-    font-size: 0.9rem; 
-    margin: 1.5rem 0; 
-}
-th, td { 
-    text-align: left; 
-    padding: 12px 16px; 
-    border: 1px solid var(--rule); 
-    color: var(--ink);
-    background: var(--paper-raised);
-}
-th { 
-    background-color: linear-gradient(135deg, #EEF2FF 0%, #F0F9FF 100%);
-    font-weight: 700; 
-    color: var(--indigo);
-    border-bottom: 2px solid var(--indigo);
-}
-tr:hover { background-color: #F8F9FA; }
+.card { background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 10px; padding: 1.5rem; height: 100%; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.card-tight { padding: 1rem 1.25rem; }
 
-/* ---------- Input Fields & Selectbox ---------- */
-.stTextInput > div > div > input,
-.stTextArea > div > div > textarea,
-.stSelectbox > div > div > select,
-.stSlider > div > div {
-    border: 1.5px solid var(--rule) !important;
-    border-radius: 8px !important;
-    color: var(--ink) !important;
-    background: var(--paper-raised) !important;
-    font-size: 0.95rem !important;
-    transition: border-color 0.2s ease !important;
-}
+.stat-card { background: var(--paper-raised); border: 1px solid var(--rule); border-left: 4px solid var(--indigo); border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+.stat-card .stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+.stat-card .stat-value { font-family: 'Source Serif 4', serif; font-size: 2.6rem; font-weight: 700; color: var(--ink); line-height: 1.1; margin: 0.5rem 0; }
+.stat-card .stat-sub { font-size: 0.85rem; color: var(--ink-soft); }
 
-.stTextInput > div > div > input:focus,
-.stTextArea > div > div > textarea:focus,
-.stSelectbox > div > div > select:focus {
-    border-color: var(--indigo) !important;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
-}
+.pipeline { display: flex; align-items: stretch; gap: 1rem; margin: 1.5rem 0 2.5rem 0; overflow-x: auto; padding-bottom: 1rem; }
+.pipe-step { flex: 1; min-width: 190px; background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 10px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.pipe-step .pipe-index { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--indigo); letter-spacing: 0.1em; font-weight: 600; }
+.pipe-step .pipe-title { font-family: 'Source Serif 4', serif; font-weight: 600; font-size: 1.15rem; margin: 0.5rem 0; color: var(--ink); }
+.pipe-step .pipe-desc { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.6; }
+.pipe-arrow { display: flex; align-items: center; justify-content: center; width: 24px; color: #CBD5E1; font-size: 1.5rem; flex-shrink: 0; }
 
-/* Button Styling */
-.stButton > button {
-    background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-soft) 100%) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 8px !important;
-    font-weight: 700 !important;
-    font-size: 0.95rem !important;
-    padding: 0.65rem 1.5rem !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3) !important;
-}
-.stButton > button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4) !important;
-}
+.sample-block { border: 1px solid var(--rule); background: var(--paper-raised); border-radius: 8px; overflow: hidden; margin-bottom: 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+.sample-block .sample-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; padding: 0.7rem 1rem; border-bottom: 1px solid var(--rule); }
+.sample-head.input { background: #EEF2FF; color: var(--indigo); }
+.sample-head.target { background: #FFF7ED; color: var(--terracotta); }
+.sample-body { padding: 1.2rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; line-height: 1.6; color: var(--ink); white-space: pre-wrap; }
 
-/* Download Button */
-a.stDownloadButton > button {
-    background: linear-gradient(135deg, var(--success) 0%, #34D399 100%) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 8px !important;
-    font-weight: 700 !important;
-    padding: 0.65rem 1.5rem !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
-}
-a.stDownloadButton > button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4) !important;
-}
+/* ---------- 11. Tabel (Dataframe) Halus ---------- */
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin-bottom: 1rem; border-radius: 8px; overflow: hidden; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--rule); color: var(--ink); background: var(--paper-raised); }
+th { background-color: var(--tag-bg); font-weight: 600; color: var(--ink-soft); border-top: 1px solid var(--rule); border-bottom: 2px solid var(--rule); }
+[data-testid="stDataFrame"] tr { transition: background-color 0.2s; }
+[data-testid="stDataFrame"] tr:hover td { background-color: #F8FAFC; } /* Zebra hover effect */
 
-/* ---------- Footnote ---------- */
-.footnote {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    border-top: 2px solid var(--indigo);
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    line-height: 1.8;
-}
-
-/* Sidebar Styling Overrides */
-section[data-testid="stSidebar"] {
-    background-color: #F8FAFF !important;
-    border-right: 2px solid var(--indigo-lighter);
-}
-section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
-    color: var(--ink) !important;
-}
-
-/* Tabs Styling */
-.stTabs [data-baseweb="tab-list"] button {
-    color: var(--ink-soft) !important;
-    border-bottom: 2px solid transparent !important;
-    font-weight: 600 !important;
-}
-.stTabs [aria-selected="true"] {
-    color: var(--indigo) !important;
-    border-bottom: 3px solid var(--indigo) !important;
-}
-
-/* Radio Styling */
-.stRadio > label {
-    color: var(--ink) !important;
-    font-weight: 500 !important;
-}
-
-/* Caption & Helper Text */
-.stCaption, .stHelp {
-    color: var(--ink-soft) !important;
-    font-size: 0.85rem !important;
-}
-
-/* Alert & Messages */
-.stWarning, .stError, .stSuccess, .stInfo {
-    border-radius: 8px !important;
-    border-left: 4px solid !important;
-    padding: 1rem !important;
-}
-.stWarning {
-    border-left-color: #F59E0B !important;
-}
-.stError {
-    border-left-color: var(--terracotta) !important;
-}
-.stSuccess {
-    border-left-color: var(--success) !important;
-}
-.stInfo {
-    border-left-color: var(--indigo) !important;
-}
-
-/* ---------- Perbaikan Multiselect Tags ---------- */
-span[data-baseweb="tag"] {
-    background-color: var(--indigo) !important;
-    border: none !important;
-}
-
-span[data-baseweb="tag"] span {
-    color: #FFFFFF !important; /* Memaksa teks di dalam tag menjadi putih */
-    font-weight: 500 !important;
-}
-
-/* Memperbaiki warna ikon 'x' (hapus) pada tag agar ikut menjadi putih terang */
-span[data-baseweb="tag"] svg {
-    fill: #FFFFFF !important;
-}
+/* ---------- 12. Footnote ---------- */
+.footnote { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--ink-soft); border-top: 1px solid var(--rule); margin-top: 3.5rem; padding-top: 1.5rem; line-height: 1.6; }
 </style>
 """
 
@@ -726,12 +531,11 @@ elif page == "Dataset Explorer":
     if df is None:
         st.warning("Berkas `dataset_id_3kolom.csv` tidak ditemukan di direktori project.")
     else:
-        st.markdown("", unsafe_allow_html=True)  # Spacing
+        st.markdown("", unsafe_allow_html=True)
         tab_preview, tab_stats, tab_search = st.tabs(
             ["Pratinjau Tabel", "Statistik", "Cari Artikel"]
         )
 
-        # --- Tab Preview ---
         with tab_preview:
             n_show = st.slider("Jumlah baris ditampilkan", 5, 200, 25, step=5)
             st.dataframe(df.head(n_show), use_container_width=True, height=420)
@@ -744,7 +548,6 @@ elif page == "Dataset Explorer":
                 mime="text/csv",
             )
 
-        # --- Tab Stats ---
         with tab_stats:
             abstrak_len = basic_text_stats(df, "abstrak")
             judul_len = basic_text_stats(df, "judul")
@@ -806,7 +609,6 @@ elif page == "Dataset Explorer":
             top_kw.columns = ["kata_kunci", "frekuensi"]
             st.bar_chart(top_kw.set_index("kata_kunci")["frekuensi"], height=350)
 
-        # --- Tab Search ---
         with tab_search:
             query = st.text_input("Cari pada judul atau abstrak", placeholder="mis. siskeudes, kosakata, kearifan lokal ...")
             if query:
@@ -850,7 +652,6 @@ elif page == "Preprocessed Data":
     if df is None:
         st.warning("Berkas `data_preprocessed/full_preprocessed.csv` tidak ditemukan.")
     else:
-        # --- Filter sidebar-like row ---
         f1, f2, f3 = st.columns([1, 1, 1.4])
         with f1:
             kategori_opts = ["(semua)"] + sorted(df["kategori_bahasa"].dropna().unique().tolist())
@@ -1035,7 +836,6 @@ elif page == "Keyphrase Generator":
                 try:
                     pool = pool[pool["judul"].str.contains(search_title, case=False, na=False, regex=True)]
                 except re.error:
-                    # Jika ada error regex, fallback ke literal search
                     pool = pool[pool["judul"].str.contains(search_title, case=False, na=False, regex=False)]
 
             if len(pool) == 0:
@@ -1189,12 +989,7 @@ elif page == "Evaluasi Model":
                 unsafe_allow_html=True,
             )
 
-    comparison_df = pd.DataFrame(
-        {
-            "RAKE": rake_scores,
-            "T5-Small": t5_scores,
-        }
-    )
+    comparison_df = pd.DataFrame({"RAKE": rake_scores, "T5-Small": t5_scores})
     st.write("")
     st.bar_chart(comparison_df, height=320)
 
