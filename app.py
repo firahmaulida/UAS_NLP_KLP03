@@ -431,6 +431,22 @@ section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
 .stInfo {
     border-left-color: var(--indigo) !important;
 }
+
+/* ---------- Perbaikan Multiselect Tags ---------- */
+span[data-baseweb="tag"] {
+    background-color: var(--indigo) !important;
+    border: none !important;
+}
+
+span[data-baseweb="tag"] span {
+    color: #FFFFFF !important; /* Memaksa teks di dalam tag menjadi putih */
+    font-weight: 500 !important;
+}
+
+/* Memperbaiki warna ikon 'x' (hapus) pada tag agar ikut menjadi putih terang */
+span[data-baseweb="tag"] svg {
+    fill: #FFFFFF !important;
+}
 </style>
 """
 
